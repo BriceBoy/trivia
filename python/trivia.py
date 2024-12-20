@@ -1,8 +1,10 @@
 from random import randrange
 
 class Game:
-    def __init__(self):
+    def __init__(self, player_1_name: str, player_2_name: str):
         self.players = []
+        self.add_player(player_1_name)
+        self.add_player(player_2_name)
         self.places = [0] * 6
         self.purses = [0] * 6
         self.in_penalty_box = [0] * 6
@@ -27,7 +29,11 @@ class Game:
     def is_playable(self):
         return self.how_many_players >= 2
     
-    def add(self, player_name):
+    def add_player(self, player_name):
+        if len(self.players) >= 6:
+            print("Too many players")
+            return False
+
         self.players.append(player_name)
         self.places[self.how_many_players] = 0
         self.purses[self.how_many_players] = 0
@@ -131,12 +137,8 @@ class Game:
 
 if __name__ == '__main__':
     not_a_winner = False
-
-    game = Game()
-
-    game.add('Chet')
-    game.add('Pat')
-    game.add('Sue')
+    game = Game("Chet", "Pat")
+    game.add_player('Sue')
 
     while True:
         game.roll(randrange(5) + 1)
